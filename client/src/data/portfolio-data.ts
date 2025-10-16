@@ -23,6 +23,7 @@ export const projects: Project[] = [
     category: "fullstack",
     featured: true,
     repoUrl: "https://github.com/YuvarajSYali-developer/Civilinc-Full-Stack-Project",
+    liveUrl: "https://drive.google.com/drive/folders/1LPaeK9swFhJZr7FNaUfMr3kGaAAohrLu",
   },
   {
     id: "chess-analyzer",
@@ -42,6 +43,7 @@ export const projects: Project[] = [
     techStack: ["Figma", "UI/UX Design", "Design Systems", "Prototyping"],
     category: "design",
     featured: true,
+    liveUrl: "https://www.figma.com/proto/cnaPBuCmLiWj8oZhv9hD46/FOOD-DELIVERY-APP-UI-LIBRARY?node-id=19-6&t=IUPGKlwaWc4kOWGZ-1&starting-point-node-id=19%3A3",
   },
   {
     id: "smart-valve",
@@ -52,6 +54,7 @@ export const projects: Project[] = [
     kpi: "99.9%+ uptime, <100ms response time",
     category: "iot",
     featured: false,
+    repoUrl: "https://github.com/YuvarajSYali-developer/Ardino_valve_project.git",
   },
   {
     id: "ahms",
@@ -61,6 +64,7 @@ export const projects: Project[] = [
     techStack: ["HTML", "CSS", "JavaScript", "Leaflet.js", "Chart.js", "Flutter", "Mobile Dev"],
     category: "fullstack",
     featured: false,
+    liveUrl: "https://triveniaiotsolution.netlify.app/",
   },
 ];
 
