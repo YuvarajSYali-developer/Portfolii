@@ -3,6 +3,7 @@ import { SkillPill } from "@/components/skill-pill";
 import { Badge } from "@/components/ui/badge";
 import { personalInfo, skills, certifications } from "@/data/portfolio-data";
 import { MapPin, GraduationCap, Award } from "lucide-react";
+import profilePhoto from "@/assets/profile-photo.png";
 
 export default function About() {
   const skillsByCategory = {
@@ -19,6 +20,13 @@ export default function About() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
+          <div className="flex justify-center mb-8 animate-in fade-in zoom-in duration-700">
+            <img 
+              src={profilePhoto} 
+              alt={personalInfo.name}
+              className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-primary/20 shadow-xl hover:scale-105 transition-transform duration-300"
+            />
+          </div>
           <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">
             About Me
           </h1>
@@ -72,9 +80,12 @@ export default function About() {
 
           <div className="space-y-8">
             {/* Frontend Development */}
-            <Card>
+            <Card className="border-primary/20 hover:border-primary/40 transition-colors">
               <CardHeader>
-                <CardTitle className="text-xl font-heading">Frontend Development</CardTitle>
+                <CardTitle className="text-xl font-heading flex items-center gap-2">
+                  <span className="inline-block w-1 h-6 bg-primary rounded-full"></span>
+                  Frontend Development
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
@@ -86,9 +97,12 @@ export default function About() {
             </Card>
 
             {/* Backend Development */}
-            <Card>
+            <Card className="border-chart-2/20 hover:border-chart-2/40 transition-colors">
               <CardHeader>
-                <CardTitle className="text-xl font-heading">Backend Development</CardTitle>
+                <CardTitle className="text-xl font-heading flex items-center gap-2">
+                  <span className="inline-block w-1 h-6 bg-chart-2 rounded-full"></span>
+                  Backend Development
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
@@ -100,9 +114,12 @@ export default function About() {
             </Card>
 
             {/* Machine Learning */}
-            <Card>
+            <Card className="border-chart-3/20 hover:border-chart-3/40 transition-colors">
               <CardHeader>
-                <CardTitle className="text-xl font-heading">Machine Learning & Data Science</CardTitle>
+                <CardTitle className="text-xl font-heading flex items-center gap-2">
+                  <span className="inline-block w-1 h-6 bg-chart-3 rounded-full"></span>
+                  Machine Learning & Data Science
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
@@ -114,9 +131,12 @@ export default function About() {
             </Card>
 
             {/* IoT & Hardware */}
-            <Card>
+            <Card className="border-chart-4/20 hover:border-chart-4/40 transition-colors">
               <CardHeader>
-                <CardTitle className="text-xl font-heading">IoT & Hardware</CardTitle>
+                <CardTitle className="text-xl font-heading flex items-center gap-2">
+                  <span className="inline-block w-1 h-6 bg-chart-4 rounded-full"></span>
+                  IoT & Hardware
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
@@ -128,9 +148,12 @@ export default function About() {
             </Card>
 
             {/* Databases */}
-            <Card>
+            <Card className="border-chart-5/20 hover:border-chart-5/40 transition-colors">
               <CardHeader>
-                <CardTitle className="text-xl font-heading">Databases</CardTitle>
+                <CardTitle className="text-xl font-heading flex items-center gap-2">
+                  <span className="inline-block w-1 h-6 bg-chart-5 rounded-full"></span>
+                  Databases
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
@@ -142,9 +165,12 @@ export default function About() {
             </Card>
 
             {/* Tools & Deployment */}
-            <Card>
+            <Card className="border-primary/20 hover:border-primary/40 transition-colors">
               <CardHeader>
-                <CardTitle className="text-xl font-heading">Tools & Deployment</CardTitle>
+                <CardTitle className="text-xl font-heading flex items-center gap-2">
+                  <span className="inline-block w-1 h-6 bg-primary rounded-full"></span>
+                  Tools & Deployment
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
