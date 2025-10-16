@@ -2,8 +2,28 @@ import { useState } from "react";
 import { ProjectCard } from "@/components/project-card";
 import { Button } from "@/components/ui/button";
 import { projects } from "@/data/portfolio-data";
+import { motion } from "framer-motion";
 
 type FilterCategory = "all" | "web" | "iot" | "design" | "fullstack";
+
+const gridContainerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const projectCardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  show: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" } 
+  },
+};
 
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState<FilterCategory>("all");
@@ -48,11 +68,19 @@ export default function Projects() {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          variants={gridContainerVariants}
+          initial="hidden"
+          animate="show"
+          key={activeFilter}
+        >
           {filteredProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <motion.div key={project.id} variants={projectCardVariants}>
+              <ProjectCard project={project} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Empty state */}
         {filteredProjects.length === 0 && (
