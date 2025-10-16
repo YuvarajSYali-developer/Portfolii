@@ -5,6 +5,7 @@ import { SEOSchema } from "@/components/seo-schema";
 import { ArrowRight, Code, Palette, Rocket, Award } from "lucide-react";
 import { personalInfo, projects } from "@/data/portfolio-data";
 import { useLocation } from "wouter";
+import profilePhoto from "@/assets/profile-photo.png";
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -20,6 +21,18 @@ export default function Home() {
         
         <div className="max-w-7xl mx-auto w-full">
           <div className="text-center space-y-8">
+            {/* Profile Photo */}
+            <div className="flex justify-center mb-6 animate-in fade-in zoom-in duration-1000">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary to-chart-2 rounded-full blur-2xl opacity-20 animate-pulse"></div>
+                <img 
+                  src={profilePhoto} 
+                  alt={personalInfo.name}
+                  className="relative w-40 h-40 md:w-48 md:h-48 rounded-full object-cover border-4 border-primary/20 shadow-2xl hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+            </div>
+            
             <div className="space-y-4">
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground animate-in fade-in slide-in-from-bottom-4 duration-1000">
                 {personalInfo.name}
