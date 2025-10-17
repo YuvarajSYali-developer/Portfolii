@@ -31,9 +31,24 @@ Preferred communication style: Simple, everyday language.
 
 **Component Architecture**
 - Reusable UI components in `client/src/components/ui/` (shadcn/ui)
-- Feature components: `Navbar`, `Footer`, `ProjectCard`, `SkillPill`, `Timeline`
+- Feature components: `Navbar`, `Footer`, `ProjectCard`, `SkillPill`, `Timeline`, `AnimatedBackground`
 - Page components following route structure in `client/src/pages/`
 - Separation of concerns: presentational vs. container components
+
+**Advanced Animations & Visual Effects**
+- **Interactive Canvas Background**: Custom-built animated background using HTML5 Canvas with:
+  - Network particle system with dynamic node connections
+  - Chess piece icons (♔ ♕ ♖ ♗ ♘ ♙) representing strategic thinking
+  - Circuit board elements (⚡ ⊕ ⊗ ◈ ◉ ⬡) reflecting ECE engineering background
+  - Cursor-interactive animations with attraction forces and connection lines
+  - Pulsing node effects and gradient glows
+  - Circuit board grid overlay
+  - Performance-optimized with requestAnimationFrame
+- **Scroll-Triggered Animations**: Framer Motion `whileInView` animations with:
+  - Staggered card reveals with 0.25s delay
+  - Scale, fade, and slide-in effects for different section types
+  - Filter-based re-animations on the Projects page
+  - Natural easing curves for smooth visual transitions
 
 ### Backend Architecture
 
@@ -111,6 +126,7 @@ Preferred communication style: Simple, everyday language.
 - **Radix UI**: Unstyled, accessible component primitives (accordion, dialog, dropdown, select, toast, etc.)
 - **Lucide React**: Icon library for consistent iconography
 - **Embla Carousel**: Carousel component for image galleries
+- **Framer Motion**: Production-ready animation library for scroll-triggered effects and page transitions
 
 ### Form & Validation
 - **React Hook Form**: Performant form state management
