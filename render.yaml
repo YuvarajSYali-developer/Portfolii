@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: portfolio
+    env: node
+    rootDir: ./client
+    buildCommand: npm install && npm run build
+    startCommand: npm run preview
+    envVars:
+      - key: NODE_VERSION
+        value: 18.17.0
+      - key: NPM_CONFIG_PRODUCTION
+        value: "false"
+    plan: free
