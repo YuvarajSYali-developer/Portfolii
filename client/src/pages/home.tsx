@@ -7,6 +7,7 @@ import { personalInfo, projects } from "@/data/portfolio-data";
 import { useLocation } from "wouter";
 import profilePhoto from "@/assets/profile-photo.png";
 import { motion } from "framer-motion";
+import { AnimatedBackground } from "@/components/animated-background";
 
 const gridContainerVariants = {
   hidden: { opacity: 0 },
@@ -50,10 +51,11 @@ export default function Home() {
   const featuredProjects = projects.filter((p) => p.featured).slice(0, 3);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      <AnimatedBackground />
       <SEOSchema />
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 md:px-8 pt-16">
+      <section className="relative min-h-screen flex items-center justify-center px-6 md:px-8 pt-16 z-10">
         {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-background -z-10" />
         
@@ -141,7 +143,7 @@ export default function Home() {
       </section>
 
       {/* Featured Projects */}
-      <section className="py-20 md:py-32 px-6 md:px-8 bg-card">
+      <section className="py-20 md:py-32 px-6 md:px-8 bg-card relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-heading font-semibold mb-4">
@@ -176,7 +178,7 @@ export default function Home() {
       </section>
 
       {/* Skills Snapshot */}
-      <section className="py-20 md:py-32 px-6 md:px-8">
+      <section className="py-20 md:py-32 px-6 md:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-heading font-semibold mb-4">
@@ -253,7 +255,7 @@ export default function Home() {
       </section>
 
       {/* Endorsement Section */}
-      <section className="py-20 md:py-32 px-6 md:px-8 bg-card">
+      <section className="py-20 md:py-32 px-6 md:px-8 bg-card relative z-10">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -284,7 +286,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 md:py-32 px-6 md:px-8">
+      <section className="py-20 md:py-32 px-6 md:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-heading font-semibold mb-6">
             Let's Build Something Amazing Together
