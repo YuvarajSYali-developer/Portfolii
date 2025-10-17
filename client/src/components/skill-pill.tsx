@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import type { Skill } from "@shared/schema";
+import type { Skill } from "@/shared/schema";
 
 interface SkillPillProps {
   skill: Skill;
@@ -18,7 +18,7 @@ export function SkillPill({ skill }: SkillPillProps) {
   return (
     <Badge
       variant="outline"
-      className={`${categoryColors[skill.category]} font-medium transition-all hover:scale-105`}
+      className={`${categoryColors[skill.category as keyof typeof categoryColors]} font-medium transition-all hover:scale-105`}
       data-testid={`skill-${skill.name.toLowerCase().replace(/\s/g, "-")}`}
     >
       {skill.name}

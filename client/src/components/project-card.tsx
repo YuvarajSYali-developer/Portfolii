@@ -1,11 +1,26 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ExternalLink, Github, Award, ArrowRight } from "lucide-react";
-import type { Project } from "@shared/schema";
-import { motion, useMotionTemplate, useSpring, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { ExternalLink, Github, Award } from "lucide-react";
+import { motion, useSpring } from "framer-motion";
+import { useRef, useState, useEffect, useMemo } from "react";
 import { cn } from "@/lib/utils";
+
+// Define the Project type with all possible properties
+type Project = {
+  id: string;
+  title: string;
+  description: string;
+  technologies?: string[];
+  repoUrl?: string;
+  githubUrl?: string;
+  liveUrl?: string;
+  category?: string;
+  kpi?: string | { value: string | number; label: string };
+};
+
+interface ProjectCardProps {
+  project: Project;
+}
 
 interface ProjectCardProps {
   project: Project;
@@ -13,12 +28,27 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [cardRect, setCardRect] = useState<DOMRect | null>(null);
+  
+  // Update card dimensions on mount and resize
+  useEffect(() => {
+    const updateCardRect = () => {
+      if (cardRef.current) {
+        setCardRect(cardRef.current.getBoundingClientRect());
+      }
+    };
+    
+    updateCardRect();
+    window.addEventListener('resize', updateCardRect);
+    return () => window.removeEventListener('resize', updateCardRect);
+  }, []);
 
   // Spring values for smooth animations
-  const springConfig = { stiffness: 300, damping: 20 };
+  const springConfig = useMemo(() => ({
+    stiffness: 300,
+    damping: 20
+  }), []);
+  
   const rotateX = useSpring(0, springConfig);
   const rotateY = useSpring(0, springConfig);
   const scale = useSpring(1, { stiffness: 300, damping: 10 });
@@ -26,34 +56,29 @@ export function ProjectCard({ project }: ProjectCardProps) {
   // Transform values for the gradient
   const gradientX = useSpring(0, { stiffness: 100, damping: 20 });
   const gradientY = useSpring(0, { stiffness: 100, damping: 20 });
-  const gradientTransform = useMotionTemplate`translate(${gradientX}px, ${gradientY}px)`;
 
+  // Handle mouse move for 3D tilt effect
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRect) return;
     
-    const x = e.clientX - cardRect.left;
-    const y = e.clientY - cardRect.top;
+    const { left, top, width, height } = cardRect;
+    const x = e.clientX - left;
+    const y = e.clientY - top;
     
-    const centerX = cardRect.width / 2;
-    const centerY = cardRect.height / 2;
+    // Calculate rotation values (reduced for subtle effect)
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const rotateXValue = ((y - centerY) / 20) * -1; // Invert for natural feel
+    const rotateYValue = (x - centerX) / 20;
     
-    // Calculate rotation based on mouse position (reduced rotation for subtlety)
-    const rotateYValue = ((x - centerX) / 20) * 0.5;
-    const rotateXValue = ((centerY - y) / 20) * 0.5;
-    
-    // Update springs
+    // Batch spring updates
     rotateY.set(rotateYValue);
     rotateX.set(rotateXValue);
-    
-    // Update gradient position
-    gradientX.set((x / cardRect.width) * 100 - 50);
-    gradientY.set((y / cardRect.height) * 100 - 50);
-    
-    setMousePosition({ x, y });
+    gradientX.set((x / width) * 100 - 50);
+    gradientY.set((y / height) * 100 - 50);
   };
 
   const handleMouseEnter = () => {
-    setIsHovered(true);
     scale.set(1.02);
     if (cardRef.current) {
       setCardRect(cardRef.current.getBoundingClientRect());
@@ -61,24 +86,22 @@ export function ProjectCard({ project }: ProjectCardProps) {
   };
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
     scale.set(1);
-    // Reset rotation
     rotateX.set(0);
     rotateY.set(0);
-    // Reset gradient
     gradientX.set(0);
     gradientY.set(0);
   };
 
-  // Glow effect based on mouse position
-  const glowStyle = {
+  // Memoize glow style to prevent unnecessary recalculations
+  const glowStyle = useMemo(() => ({
     background: `radial-gradient(
-      600px circle at ${mousePosition.x}px ${mousePosition.y}px, 
+      600px circle at 50% 50%, 
       rgba(var(--primary) / 0.1), 
       transparent 40%
     )`,
-  };
+    transform: `translateX(${gradientX.get()}px) translateY(${gradientY.get()}px)`,
+  }), [gradientX, gradientY]);
 
   return (
     <motion.div
@@ -91,14 +114,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
         perspective: '1000px',
       }}
       data-cursor="link"
+      data-testid="project-card"
     >
       {/* Animated background glow */}
       <motion.div 
         className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        style={{
-          ...glowStyle,
-          transform: gradientTransform,
-        }}
+        style={glowStyle}
         aria-hidden="true"
       />
       
@@ -135,17 +156,22 @@ export function ProjectCard({ project }: ProjectCardProps) {
                   <div className="flex items-center gap-2 mb-3">
                     <Award className="h-4 w-4 text-primary animate-pulse" />
                     <span className="text-sm font-medium text-primary">
-                      {project.kpi}
+                      {typeof project.kpi === 'object' 
+                        ? `${project.kpi.value} ${project.kpi.label}`
+                        : project.kpi
+                      }
                     </span>
                   </div>
                 )}
               </div>
-              <Badge 
-                variant="secondary" 
-                className="text-xs uppercase font-semibold relative z-10"
-              >
-                {project.category}
-              </Badge>
+              {project.category && (
+                <Badge 
+                  variant="secondary" 
+                  className="text-xs uppercase font-semibold relative z-10"
+                >
+                  {project.category}
+                </Badge>
+              )}
             </div>
           </CardHeader>
           
@@ -156,78 +182,42 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
             {/* Tech Stack */}
             <div className="flex flex-wrap gap-2 mb-4 mt-auto">
-              {project.techStack.map((tech) => (
-                <motion.div
-                  key={tech}
-                  whileHover={{ 
-                    y: -2,
-                    scale: 1.05,
-                    transition: { type: 'spring', stiffness: 400, damping: 10 }
-                  }}
+              {project.technologies?.map((tech: string) => (
+                <Badge 
+                  key={tech} 
+                  variant="outline"
+                  className="text-xs font-mono px-2 py-0.5 hover:bg-primary/10 transition-colors"
+                  data-testid={`badge-tech-${tech.toLowerCase().replace(/\s/g, "-")}`}
                 >
-                  <Badge
-                    variant="outline"
-                    className={cn(
-                      "font-mono text-xs cursor-default",
-                      "bg-background/80 backdrop-blur-sm",
-                      "transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
-                    )}
-                    data-testid={`badge-tech-${tech.toLowerCase().replace(/\s/g, "-")}`}
-                  >
-                    {tech}
-                  </Badge>
-                </motion.div>
+                  {tech}
+                </Badge>
               ))}
             </div>
 
             {/* Links */}
             <div className="flex flex-wrap gap-2 mt-2">
-              {project.repoUrl && (
+              {(project.repoUrl || project.githubUrl) && (
                 <motion.a
-                  href={project.repoUrl}
+                  href={project.repoUrl || project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block"
-                  whileHover={{ 
-                    y: -2,
-                    transition: { type: 'spring', stiffness: 400, damping: 10 }
-                  }}
-                  data-testid={`link-repo-${project.id}`}
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                  whileHover={{ x: 2 }}
                 >
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="group/btn relative overflow-hidden"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-0 group-hover/btn:opacity-100 transition-opacity"></div>
-                    <Github className="h-4 w-4 mr-2 group-hover/btn:rotate-12 transition-transform" />
-                    <span className="relative">Repository</span>
-                    <ArrowRight className="h-4 w-4 ml-1 opacity-0 -translate-x-2 group-hover/btn:opacity-100 group-hover/btn:translate-x-1 transition-all duration-300" />
-                  </Button>
+                  <Github className="h-4 w-4" aria-hidden="true" />
+                  <span>View Code <span className="sr-only">for {project.title}</span></span>
                 </motion.a>
               )}
-              
               {project.liveUrl && (
                 <motion.a
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block"
-                  whileHover={{ 
-                    y: -2,
-                    transition: { type: 'spring', stiffness: 400, damping: 10 }
-                  }}
-                  data-testid={`link-live-${project.id}`}
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                  whileHover={{ x: 2 }}
                 >
-                  <Button 
-                    size="sm" 
-                    className="group/btn relative overflow-hidden"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/80 opacity-0 group-hover/btn:opacity-100 transition-opacity"></div>
-                    <ExternalLink className="h-4 w-4 mr-2 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                    <span className="relative">Live Demo</span>
-                    <ArrowRight className="h-4 w-4 ml-1 opacity-0 -translate-x-2 group-hover/btn:opacity-100 group-hover/btn:translate-x-1 transition-all duration-300" />
-                  </Button>
+                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                  <span>Live Demo <span className="sr-only">of {project.title}</span></span>
                 </motion.a>
               )}
             </div>
@@ -237,4 +227,3 @@ export function ProjectCard({ project }: ProjectCardProps) {
     </motion.div>
   );
 }
-

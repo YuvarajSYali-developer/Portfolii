@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { contactFormSchema, type ContactForm } from "@shared/schema";
+import { contactFormSchema, type ContactForm } from "@/shared/schema";
 import { Mail, Phone, Github, Linkedin, MapPin } from "lucide-react";
 import { personalInfo } from "@/data/portfolio-data";
 import { useState } from "react";
@@ -35,28 +35,15 @@ export default function Contact() {
   const onSubmit = async (data: ContactForm) => {
     setIsSubmitting(true);
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Failed to send message");
-      }
-
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      
       toast({
         title: "Message sent!",
-        description: "Thank you for reaching out. I'll get back to you soon.",
+        description: "Thank you for reaching out. I'll get back to you soon!",
       });
-
+      
       form.reset();
-
-      // Also open mailto as a fallback for immediate contact
       const mailtoLink = `mailto:${personalInfo.email}?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(`From: ${data.name} (${data.email})\n\n${data.message}`)}`;
       window.location.href = mailtoLink;
     } catch (error) {

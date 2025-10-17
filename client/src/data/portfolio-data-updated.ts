@@ -1,4 +1,4 @@
-import type { PersonalInfo, Project, Skill, WorkExperience, Certification } from "@shared/schema";
+import type { PersonalInfo, Project, WorkExperience, Certification } from "@/shared/schema";
 
 export const personalInfo: PersonalInfo = {
   name: "Yuvaraj S Yali",
@@ -13,15 +13,16 @@ export const personalInfo: PersonalInfo = {
 
 export const projects: Project[] = [
   {
-    id: "civilinc",
-    title: "CivilInc",
-    description: "Full-stack civic-tech platform digitizing urban grievance redressal and inter-department coordination.",
-    longDescription: "Designed and developed a full-stack civic-tech platform to digitize urban grievance redressal and improve inter-department coordination. Features include real-time complaint submission, status tracking, admin dashboards with project monitoring, budget tracking, and smart analytics.",
-    techStack: ["React", "Node.js", "Express", "SQLite", "Chart.js", "Tailwind CSS"],
-    kpi: "60% faster resolution & full civic record digitization",
-    category: "fullstack",
+    id: "civic-connect",
+    title: "CivicConnect",
+    description: "A platform connecting citizens with local government services",
+    longDescription: "Developed a full-stack web application using Node.js and Express to provide chess players with in-depth game analysis. Integrated with third-party APIs from Lichess.org and Chess.com to fetch and process real-time game data. Created an interactive and responsive dashboard with vanilla JavaScript and Chart.js to visualize key performance metrics, including accuracy trends and opening statistics. Engineered an 'AI-Insights' feature to generate personalized recommendations.",
+    technologies: ["React", "Node.js", "MongoDB", "Express"],
+    techStack: ["React", "Node.js", "MongoDB", "Express"],
+    kpi: { value: 60, label: "faster resolution & full civic record digitization" },
+    category: "Web Development",
     featured: true,
-    repoUrl: "https://github.com/YuvarajSYali-developer/Civilinc-Full-Stack-Project",
+    githubUrl: "https://github.com/YuvarajSYali-developer/Civilinc-Full-Stack-Project",
     liveUrl: "https://drive.google.com/drive/folders/1LPaeK9swFhJZr7FNaUfMr3kGaAAohrLu",
   },
   // ... (other projects remain the same)

@@ -1,10 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2 } from "lucide-react";
-import type { WorkExperience } from "@shared/schema";
+import type { TimelineItem } from "@/shared/schema";
 
 interface TimelineProps {
-  experiences: WorkExperience[];
+  experiences: TimelineItem[];
 }
 
 export function Timeline({ experiences }: TimelineProps) {
@@ -50,15 +50,22 @@ export function Timeline({ experiences }: TimelineProps) {
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
-                    {exp.description.map((item, i) => (
-                      <li
-                        key={i}
-                        className="text-sm text-muted-foreground flex items-start gap-2"
-                      >
+                    {Array.isArray(exp.description) ? (
+                      exp.description.map((item: string, i: number) => (
+                        <li
+                          key={i}
+                          className="text-sm text-muted-foreground flex items-start gap-2"
+                        >
+                          <span className="text-primary mt-1">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))
+                    ) : (
+                      <li className="text-sm text-muted-foreground flex items-start gap-2">
                         <span className="text-primary mt-1">•</span>
-                        <span>{item}</span>
+                        <span>{exp.description}</span>
                       </li>
-                    ))}
+                    )}
                   </ul>
                 </CardContent>
               </Card>
