@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig(({ mode }) => ({
+  base: '/',
   plugins: [
     react(),
     splitVendorChunkPlugin(),
@@ -57,9 +58,13 @@ export default defineConfig(({ mode }) => ({
   
   preview: {
     port: 3000,
+    host: true,
+    strictPort: true,
   },
   
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
   },
+
+  // Build configuration is already defined above
 }));
