@@ -57,9 +57,14 @@ export default defineConfig(({ mode }) => ({
   },
   
   preview: {
-    port: 3000,
-    host: true,
+    port: process.env.PORT ? parseInt(process.env.PORT) : 3000,
+    host: '0.0.0.0',
     strictPort: true,
+    allowedHosts: [
+      'yuvarajyali.onrender.com',
+      'localhost',
+      '127.0.0.1'
+    ]
   },
   
   define: {

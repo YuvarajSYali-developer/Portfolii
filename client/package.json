@@ -9,7 +9,7 @@
     "type-check": "tsc --noEmit",
     "prebuild": "npm run type-check",
     "preview": "vite preview --port $PORT",
-    "start": "vite preview --port $PORT",
+    "start": "vite preview --host 0.0.0.0 --port $PORT",
     "vercel-build": "vite build",
     "test": "vitest",
     "test:watch": "vitest watch",
