@@ -6,6 +6,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { PageTransition } from "@/components/page-transition";
+import { BackToTop } from "@/components/back-to-top";
+import { NetworkBackground } from "@/components/network-background";
+import { CustomCursor } from "@/components/custom-cursor";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import About from "@/pages/about";
@@ -22,13 +26,41 @@ function Router() {
   
   return (
     <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/projects" component={Projects} />
-      <Route path="/resume" component={Resume} />
-      <Route path="/blog" component={Blog} />
-      <Route path="/contact" component={Contact} />
-      <Route component={NotFound} />
+      <Route path="/">
+        <PageTransition>
+          <Home />
+        </PageTransition>
+      </Route>
+      <Route path="/about">
+        <PageTransition>
+          <About />
+        </PageTransition>
+      </Route>
+      <Route path="/projects">
+        <PageTransition>
+          <Projects />
+        </PageTransition>
+      </Route>
+      <Route path="/resume">
+        <PageTransition>
+          <Resume />
+        </PageTransition>
+      </Route>
+      <Route path="/blog">
+        <PageTransition>
+          <Blog />
+        </PageTransition>
+      </Route>
+      <Route path="/contact">
+        <PageTransition>
+          <Contact />
+        </PageTransition>
+      </Route>
+      <Route>
+        <PageTransition>
+          <NotFound />
+        </PageTransition>
+      </Route>
     </Switch>
   );
 }
@@ -46,12 +78,15 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
-          <div className="flex flex-col min-h-screen">
+          <div className="flex flex-col min-h-screen relative overflow-x-hidden">
+            <NetworkBackground />
+            <CustomCursor />
             <Navbar />
-            <main className="flex-1">
+            <main className="flex-1 relative z-10">
               <Router />
             </main>
             <Footer />
+            <BackToTop />
           </div>
           <Toaster />
         </TooltipProvider>
