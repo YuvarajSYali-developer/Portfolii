@@ -1,0 +1,35 @@
+Build a responsive, production-ready portfolio website for "Yuvaraj S Yali" using React (Vite), Tailwind CSS, and React Router. Include serverless contact form (via Netlify/Vercel serverless function or simple mailto) and deploy-ready config for Vercel. Accessibility and SEO-first.
+
+Requirements:
+- Pages: Home, About, Projects, Resume (downloadable PDF), Blog (stub), Contact.
+- Mobile-first responsive design, dark/light toggle, keyboard accessible, aria labels, semantic HTML.
+- Use a clean, modern layout (hero + quick stats, skills, featured projects, testimonials/endorsements, contact).
+- Include site metadata (title, description, open graph tags) and sitemap.xml.
+- Build reusable components: Navbar, Footer, ProjectCard (with tags, tech icons, repo/demo links), SkillPill, Timeline.
+- Integrate analytics (Google Analytics or Plausible stub).
+- Provide unit tests for key components (Jest + React Testing Library).
+- Provide a small README with deploy steps to Vercel.
+
+Content to use (from resume):
+- Name: Yuvaraj S Yali
+- Role tagline (hero): "Electronics & Communication engineer — UI/UX Designer & Full-Stack Web Dev focused on civic-tech and data-driven apps."
+- Short profile blurb: "Detail-oriented and solutions-driven ECE student at Manipal Institute of Technology with hands-on experience in UI/UX design, full-stack web development, and Python-based data structures. Proven ability to lead end-to-end tech projects; currently interning as an SDE and building frontend + data-science skills."
+- Contact: +91 8310755424, yuvarajyali@gmail.com
+- Links: GitHub: https://github.com/YuvarajSYali-developer, LinkedIn: (from resume)
+- Featured projects (brief cards):
+  1. CivilInc — Full-stack civic-tech platform; grievance redressal, dashboards; endorsed by Shivamogga Smart City Ltd. Repo: github.com/YuvarajSYali-developer/Civilinc-Full-Stack-Project
+  2. Chess Analyzer Pro — Node.js + Express, integrated Lichess/Chess.com, interactive analytics & AI insights. Live: https://chess-analysis-final.onrender.com/
+  3. Quick Byte — Figma UI/UX food delivery app with design system and prototypes.
+  4. Smart Water Valve Control System — Arduino + Python backend + Flutter mobile client.
+  5. AHMS — Animal Health Management System: dashboards, Leaflet maps, mobile apps (VetCare, Kisan Sahayak).
+- Skills: React, Vue, FastAPI, Flask, Node.js, Tailwind, Figma, SQLAlchemy, Chart.js, Arduino, Python, data viz.
+- Certifications: FastAPI (Udemy), Google BI, Microsoft UX Design.
+
+UX details:
+- Project cards should show: title, 2-line summary, tech stack badges, repo/demo links, KPI (e.g., "60% faster resolution" for CivilInc).
+- Add a "Download Resume" button and a timeline of experience/internships (Shivamogga Smart City, Policy Research Intern at Building Bharat, freelance Chatloom work).
+- Color palette: neutral base with a single accent (example: slate #0f172a + accent #06b6d4).
+- Fonts: Inter or Poppins.
+- Provide sample meta description for SEO and JSON-LD schema for Person.
+
+Generate full project files, minimal CSS customizations only in Tailwind config, and show final build/deploy steps.
